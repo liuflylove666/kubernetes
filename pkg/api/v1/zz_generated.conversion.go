@@ -3531,6 +3531,7 @@ func autoConvert_v1_PodSpec_To_api_PodSpec(in *PodSpec, out *api.PodSpec, s conv
 	out.SchedulerName = in.SchedulerName
 	out.Tolerations = *(*[]api.Toleration)(unsafe.Pointer(&in.Tolerations))
 	out.HostAliases = *(*[]api.HostAlias)(unsafe.Pointer(&in.HostAliases))
+	out.UserDefineNet = in.UserDefineNet
 	return nil
 }
 
@@ -3576,6 +3577,7 @@ func autoConvert_api_PodSpec_To_v1_PodSpec(in *api.PodSpec, out *PodSpec, s conv
 	out.SchedulerName = in.SchedulerName
 	out.Tolerations = *(*[]Toleration)(unsafe.Pointer(&in.Tolerations))
 	out.HostAliases = *(*[]HostAlias)(unsafe.Pointer(&in.HostAliases))
+	out.UserDefineNet = in.UserDefineNet
 	return nil
 }
 

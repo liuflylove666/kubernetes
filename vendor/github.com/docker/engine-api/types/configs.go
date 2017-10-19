@@ -16,6 +16,7 @@ type ContainerCreateConfig struct {
 	HostConfig       *container.HostConfig
 	NetworkingConfig *network.NetworkingConfig
 	AdjustCPUShares  bool
+	UserDefineNet	 string
 }
 
 // ContainerRmConfig holds arguments for the container remove

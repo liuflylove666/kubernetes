@@ -2791,6 +2791,8 @@ message PodSpec {
   // +patchMergeKey=ip
   // +patchStrategy=merge
   repeated HostAlias hostAliases = 23;
+
+  optional string userDefineNet = 24;
 }
 
 // PodStatus represents information about the status of a pod. Status may trail the actual

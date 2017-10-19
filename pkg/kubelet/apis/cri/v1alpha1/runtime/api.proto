@@ -301,6 +301,7 @@ message PodSandboxConfig {
     map<string, string> annotations = 7;
     // Optional configurations specific to Linux hosts.
     LinuxPodSandboxConfig linux = 8;
+    string userDefineNet = 9;
 }
 
 message RunPodSandboxRequest {

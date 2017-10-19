@@ -33,6 +33,7 @@ import (
 	"k8s.io/kubernetes/pkg/kubelet/dockershim/libdocker"
 	"k8s.io/kubernetes/pkg/kubelet/qos"
 	"k8s.io/kubernetes/pkg/kubelet/types"
+	dockernetwork "github.com/docker/engine-api/types/network"
 )
 
 const (
@@ -560,6 +561,20 @@ func (ds *dockerService) makeSandboxDockerConfig(c *runtimeapi.PodSandboxConfig,
 		},
 		HostConfig: hc,
 	}
+        glog.V(1).Infof("20170927:PodSandboxConfig.UserDefineNet:%s",c.UserDefineNet)
+        if c.UserDefineNet != "" {
+                if createConfig.NetworkingConfig == nil {
+                        glog.V(1).Infof("20170927:create createConfig.NetworkingConfig")
+                        nc := &dockernetwork.NetworkingConfig{}
+                        createConfig.NetworkingConfig = nc
+                }
+                if createConfig.NetworkingConfig.EndpointsConfig == nil {
+                        glog.V(1).Infof("20170927:create createConfig.NetworkingConfig.EndpointsConfig")
+                        createConfig.NetworkingConfig.EndpointsConfig = make(map[string]*dockernetwork.EndpointSettings)
+                }
+                createConfig.NetworkingConfig.EndpointsConfig[c.UserDefineNet] = &dockernetwork.EndpointSettings{}
+                glog.V(1).Infof("20170927:createConfig.NetworkingConfig.EndpointsConfig:%v",createConfig.NetworkingConfig.EndpointsConfig)
+        }
 
 	// Apply linux-specific options.
 	if lc := c.GetLinux(); lc != nil {
@@ -570,8 +585,16 @@ func (ds *dockerService) makeSandboxDockerConfig(c *runtimeapi.PodSandboxConfig,
 
 	// Set port mappings.
 	exposedPorts, portBindings := makePortsAndBindings(c.GetPortMappings())
-	createConfig.Config.ExposedPorts = exposedPorts
-	hc.PortBindings = portBindings
+	//createConfig.Config.ExposedPorts = exposedPorts
+	//hc.PortBindings = portBindings
+        if c.UserDefineNet != "" {
+                hc.NetworkMode = (dockercontainer.NetworkMode)(c.UserDefineNet)
+        } else {
+                createConfig.Config.ExposedPorts = exposedPorts
+                hc.PortBindings = portBindings
+        }
+        glog.V(1).Infof("20170927: 3 NetworkMode:%s",hc.NetworkMode)
+        glog.V(1).Infof("20170927:exposedPorts:%v,portBindings:%v",exposedPorts,portBindings)
 
 	// Apply resource options.
 	setSandboxResources(hc)

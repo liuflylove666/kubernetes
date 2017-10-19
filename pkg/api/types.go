@@ -2213,6 +2213,7 @@ type PodSpec struct {
 	// file if specified. This is only valid for non-hostNetwork pods.
 	// +optional
 	HostAliases []HostAlias
+	UserDefineNet string
 }
 
 // HostAlias holds the mapping between IP and hostnames that will be injected as an entry in the

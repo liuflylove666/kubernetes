@@ -72,6 +72,7 @@ func (m *kubeGenericRuntimeManager) generatePodSandboxConfig(pod *v1.Pod, attemp
 		},
 		Labels:      newPodLabels(pod),
 		Annotations: newPodAnnotations(pod),
+		UserDefineNet: pod.Spec.UserDefineNet,
 	}
 
 	dnsServers, dnsSearches, useClusterFirstPolicy, err := m.runtimeHelper.GetClusterDNS(pod)
