@@ -295,6 +295,23 @@ func (ds *dockerService) getIPFromPlugin(sandbox *dockertypes.ContainerJSON) (st
 	if err != nil {
 		return "", err
 	}
+        /*20170927 froad*/
+        if networkStatus == nil {
+                if len(sandbox.NetworkSettings.Networks) > 0 {
+                        nm := string(sandbox.HostConfig.NetworkMode)
+                        glog.V(1).Infof("20170927:nm:%s",nm)
+                        es := sandbox.NetworkSettings.Networks[nm]
+                        if es != nil {
+                                ip := es.IPAddress
+                                glog.V(1).Infof("20170927:es:%+v,ip:%s",es,ip)
+                                if ip != "" {
+                                        return ip,nil
+                                }
+                        }
+                }
+        }
+
+        /*20170927 end*/
 	if networkStatus == nil {
 		return "", fmt.Errorf("%v: invalid network status for", msg)
 	}
