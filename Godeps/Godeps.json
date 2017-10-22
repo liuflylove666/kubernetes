@@ -2591,10 +2591,6 @@
 			"Rev": "5292687f5379e01054407da44d7c4590a61fd3de"
 		},
 		{
-			"ImportPath": "go.pedge.io/pb/go/google/protobuf",
-			"Rev": "f3c84f58974dc53d460d0855337cad85843bf0df"
-		},
-		{
 			"ImportPath": "go4.org/errorutil",
 			"Rev": "03efcb870d84809319ea509714dd6d19a1498483"
 		},

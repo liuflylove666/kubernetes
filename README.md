@@ -31,3 +31,15 @@ modify files:
 #       modified:   staging/src/k8s.io/client-go/pkg/api/v1/types_swagger_doc_generated.go
 #       modified:   vendor/github.com/docker/engine-api/types/configs.go
 ```
+
+fix-bug proto: duplicate proto type registered
+
+```
+#       modified:   Godeps/Godeps.json
+#       modified:   Godeps/LICENSES
+#       modified:   vendor/BUILD
+#       modified:   vendor/github.com/libopenstorage/openstorage/api/BUILD
+#       modified:   vendor/github.com/libopenstorage/openstorage/api/api.pb.go
+$cd vendor/github.com/libopenstorage/openstorage/
+$protoc --go_out=. ./api/api.proto
+```

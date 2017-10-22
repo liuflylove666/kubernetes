@@ -317,7 +317,6 @@ filegroup(
         "//vendor/github.com/xanzy/go-cloudstack/cloudstack:all-srcs",
         "//vendor/github.com/xiang90/probing:all-srcs",
         "//vendor/github.com/xyproto/simpleredis:all-srcs",
-        "//vendor/go.pedge.io/pb/go/google/protobuf:all-srcs",
         "//vendor/go4.org/errorutil:all-srcs",
         "//vendor/golang.org/x/crypto/bcrypt:all-srcs",
         "//vendor/golang.org/x/crypto/blowfish:all-srcs",
