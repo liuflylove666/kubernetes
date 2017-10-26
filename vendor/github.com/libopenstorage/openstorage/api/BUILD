@@ -17,7 +17,7 @@ go_library(
     tags = ["automanaged"],
     deps = [
         "//vendor/github.com/golang/protobuf/proto:go_default_library",
-	 "//vendor/github.com/golang/protobuf/ptypes/timestamp:go_default_library",
+	"//vendor/github.com/golang/protobuf/ptypes/timestamp:go_default_library",
     ],
 )
 

@@ -43,3 +43,29 @@ fix-bug proto: duplicate proto type registered
 $cd vendor/github.com/libopenstorage/openstorage/
 $protoc --go_out=. ./api/api.proto
 ```
+
+
+#add labels to containers
+
+```
+kind: Deployment
+metadata:
+  name: tlabels
+  namespace: default
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        run: tlabels
+      annotations:
+        froad-containers-labels/aliyun.logs.standard_srv_operating-report_debug: /data/logs/operating-report_34657_debug
+        froad-containers-labels/aliyun.logs.standard_srv_operating-report_error: /data/logs/operating-report_34657_error
+    spec:
+      containers:
+      - name: tlabels
+        image: index.tenxcloud.com/docker_library/nginx
+        ports:
+        - containerPort: 80
+      userDefineNet: vlan608
+```

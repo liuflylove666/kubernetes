@@ -26,6 +26,7 @@ import (
 	kubecontainer "k8s.io/kubernetes/pkg/kubelet/container"
 	"k8s.io/kubernetes/pkg/kubelet/types"
 	"k8s.io/kubernetes/pkg/kubelet/util/format"
+	"strings"
 )
 
 const (
@@ -39,6 +40,7 @@ const (
 	containerTerminationMessagePolicyLabel = "io.kubernetes.container.terminationMessagePolicy"
 	containerPreStopHandlerLabel           = "io.kubernetes.container.preStopHandler"
 	containerPortsLabel                    = "io.kubernetes.container.ports"
+	kubernetesAnnotationContainerLabelPrefix = "froad-containers-labels/"
 )
 
 type labeledPodSandboxInfo struct {
@@ -101,6 +103,17 @@ func newContainerLabels(container *v1.Container, pod *v1.Pod) map[string]string 
 	labels[types.KubernetesPodUIDLabel] = string(pod.UID)
 	labels[types.KubernetesContainerNameLabel] = container.Name
 
+        /*20170927:froad add container labels*/
+        for k, v := range pod.Annotations {
+                if strings.HasPrefix(k, kubernetesAnnotationContainerLabelPrefix) {
+                        k = k[len(kubernetesAnnotationContainerLabelPrefix):]
+
+                        // If there's nothing after the "/" then just skip this one
+                        if len(k) > 0 {
+                                labels[k] = v
+                        }
+                }
+        }
 	return labels
 }
 
