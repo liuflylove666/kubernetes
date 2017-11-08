@@ -84,6 +84,7 @@ import (
 	rbacrest "k8s.io/kubernetes/pkg/registry/rbac/rest"
 	"k8s.io/kubernetes/pkg/version"
 	"k8s.io/kubernetes/plugin/pkg/auth/authenticator/token/bootstrap"
+	dockernetwork "customer/network"
 )
 
 const etcdRetryLimit = 60
@@ -153,6 +154,11 @@ func Run(runOptions *options.ServerRunOptions, stopCh <-chan struct{}) error {
 	// otherwise go down the normal path of standing the aggregator up in front of the API server
 	// this wires up openapi
 	kubeAPIServer.GenericAPIServer.PrepareRun()
+
+        etcdhelp,err := dockernetwork.NewETCD2Client(runOptions.Etcd.StorageConfig)
+        glog.V(1).Infof("20170927:etcdhelp:%v,err:%v", etcdhelp,err)
+        dockernetwork.InstallHandler(kubeAPIServer.GenericAPIServer.Handler.NonGoRestfulMux,etcdhelp)
+
 
 	// aggregator comes last in the chain
 	aggregatorConfig, err := createAggregatorConfig(*kubeAPIServerConfig.GenericConfig, runOptions, versionedInformers, serviceResolver, proxyTransport)

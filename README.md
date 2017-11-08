@@ -69,3 +69,11 @@ spec:
         - containerPort: 80
       userDefineNet: vlan608
 ```
+
+#add kube-apiserver http://kube-apiserver:port/docker/networkls
+```
+curl http://10.43.1.243:8080/docker/networkls
+
+[{"resourceid":"ae493a25989426513e7728b2524b7e68eaa314316c7880acca02de4e75414d94","name":"vlan608","driver":"macvlan","scope":"global"}]
+
+```
